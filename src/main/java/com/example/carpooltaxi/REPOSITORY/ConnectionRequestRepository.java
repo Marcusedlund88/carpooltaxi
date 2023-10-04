@@ -1,11 +1,14 @@
 package com.example.carpooltaxi.REPOSITORY;
 
-import com.example.carpooltaxi.DATA.Connection;
+import com.example.carpooltaxi.DATA.ConnectionRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ConnectionRequestRepository extends JpaRepository<Connection, Long> {
-    Connection getConnectionBySenderUserId(long id);
-    Connection getConnectionByReceiverUserId(long id);
+import java.util.List;
+
+public interface ConnectionRequestRepository extends JpaRepository<ConnectionRequest, Long> {
+    ConnectionRequest getConnectionBySenderUserId(long id);
+    ConnectionRequest getConnectionByReceiverUserId(long id);
     void deleteById(long id);
-    Connection getConnectionById(long id);
+    ConnectionRequest getConnectionById(long id);
+    List<ConnectionRequest> findAllByReceiverUserId(long id);
 }

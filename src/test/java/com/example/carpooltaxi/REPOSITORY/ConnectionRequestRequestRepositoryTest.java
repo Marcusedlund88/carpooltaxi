@@ -1,8 +1,7 @@
 package com.example.carpooltaxi.REPOSITORY;
 
 import com.example.carpooltaxi.DATA.AppUser;
-import com.example.carpooltaxi.DATA.Connection;
-import com.example.carpooltaxi.REPOSITORY.ConnectionRequestRepository;
+import com.example.carpooltaxi.DATA.ConnectionRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,13 +14,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 @SpringBootTest
-class ConnectionRequestRepositoryTest {
+class ConnectionRequestRequestRepositoryTest {
 
     @Mock
     private ConnectionRequestRepository connectionRequestRepository;
 
     @InjectMocks
-    private Connection connection;
+    private ConnectionRequest connectionRequest;
 
     @InjectMocks
     private AppUser appUserOne;
@@ -37,11 +36,11 @@ class ConnectionRequestRepositoryTest {
         appUserOne = new AppUser(1,"dummyOne");
         appUserTwo = new AppUser(5, "dummyTwo");
 
-        connection = new Connection(3, appUserOne, appUserTwo);
+        connectionRequest = new ConnectionRequest(3, appUserOne, appUserTwo);
 
-        when(connectionRequestRepository.save(connection)).thenReturn(connection);
-        when(connectionRequestRepository.findAll()).thenReturn(List.of(connection));
-        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connection);
+        when(connectionRequestRepository.save(connectionRequest)).thenReturn(connectionRequest);
+        when(connectionRequestRepository.findAll()).thenReturn(List.of(connectionRequest));
+        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connectionRequest);
     }
 
     @Test
@@ -51,12 +50,12 @@ class ConnectionRequestRepositoryTest {
 
     @Test
     public void getReceiverAppUserIdAssertCorrectValue(){
-        assertEquals(connection.getReceiverUser().getId(),5);
+        assertEquals(connectionRequest.getReceiverUser().getId(),5);
     }
 
     @Test
     public void getConnectionByReceiverId(){
-        connection = connectionRequestRepository.getConnectionByReceiverUserId(5);
-        assertEquals(connection.getReceiverUser().getId(),5);
+        connectionRequest = connectionRequestRepository.getConnectionByReceiverUserId(5);
+        assertEquals(connectionRequest.getReceiverUser().getId(),5);
     }
 }

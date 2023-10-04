@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Connection {
+public class ConnectionEstablish {
 
 
     @Id
@@ -24,7 +24,7 @@ public class Connection {
     @JoinColumn(name = "receiver_user_id")
     private AppUser receiverUser;
 
-    public Connection(AppUser senderUser, AppUser receiverUser) {
+    public ConnectionEstablish(AppUser senderUser, AppUser receiverUser) {
         this.senderUser = senderUser;
         this.receiverUser = receiverUser;
     }

@@ -2,7 +2,8 @@ package com.example.carpooltaxi.SERVICE;
 
 import com.example.carpooltaxi.BODY.RequestBodyConnection;
 import com.example.carpooltaxi.DATA.AppUser;
-import com.example.carpooltaxi.DATA.Connection;
+import com.example.carpooltaxi.DATA.ConnectionEstablish;
+import com.example.carpooltaxi.DATA.ConnectionRequest;
 import com.example.carpooltaxi.REPOSITORY.AppUserRepository;
 import com.example.carpooltaxi.REPOSITORY.ConnectionEstablishedRepository;
 import com.example.carpooltaxi.REPOSITORY.ConnectionRequestRepository;
@@ -31,10 +32,13 @@ class RequestServiceTest {
     private AppUserRepository appUserRepository;
 
     @InjectMocks
-    private Connection connection;
+    private ConnectionRequest connectionRequest;
 
     @InjectMocks
-    private Connection connectionTwo;
+    private ConnectionEstablish connectionEstablish;
+
+    @InjectMocks
+    private ConnectionRequest connectionRequestTwo;
 
     @InjectMocks
     private AppUser appUserOne;
@@ -52,20 +56,20 @@ class RequestServiceTest {
         appUserOne = new AppUser(1,"dummyOne");
         appUserTwo = new AppUser(2,"dummyTwo");
 
-        connection = new Connection(1,appUserOne,appUserTwo);
+        connectionRequest = new ConnectionRequest(1,appUserOne,appUserTwo);
 
-        when(connectionEstablishedRepository.save(connection)).thenReturn(connection);
-        when(connectionEstablishedRepository.findAll()).thenReturn(List.of(connection));
-        when(connectionEstablishedRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connection);
+        when(connectionEstablishedRepository.save(connectionEstablish)).thenReturn(connectionEstablish);
+        when(connectionEstablishedRepository.findAll()).thenReturn(List.of(connectionEstablish));
+        when(connectionEstablishedRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connectionEstablish);
 
-        when(connectionRequestRepository.save(connection)).thenReturn(connection);
-        when(connectionRequestRepository.findAll()).thenReturn(List.of(connection));
-        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connection);
+        when(connectionRequestRepository.save(connectionRequest)).thenReturn(connectionRequest);
+        when(connectionRequestRepository.findAll()).thenReturn(List.of(connectionRequest));
+        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connectionRequest);
     }
 
     @Test
     public void establishConnectionExpectBusy(){
-        connectionEstablishedRepository.save(connection);
+        connectionEstablishedRepository.save(connectionEstablish);
         RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
         requestBodyConnection.setIdSender(appUserOne.getId());
         requestBodyConnection.setIdReceiver(appUserTwo.getId());
@@ -107,7 +111,7 @@ class RequestServiceTest {
         }
         else{
             try {
-                connectionRequestRepository.save(new Connection(appUserRepository.getAppUserById(requestBodyConnection.getIdSender())
+                connectionRequestRepository.save(new ConnectionRequest(appUserRepository.getAppUserById(requestBodyConnection.getIdSender())
                         , appUserRepository.getAppUserById(requestBodyConnection.getIdReceiver())));
                 return "Wait for user response";
             }
@@ -121,9 +125,9 @@ class RequestServiceTest {
     public String establishConnectionGranted(RequestBodyConnection requestBodyConnection){
 
         try{
-            connection = connectionRequestRepository.getConnectionByReceiverUserId(requestBodyConnection.getIdReceiver());
-            connectionEstablishedRepository.save(connection);
-            connectionRequestRepository.delete(connection);
+            connectionRequest = connectionRequestRepository.getConnectionByReceiverUserId(requestBodyConnection.getIdReceiver());
+            connectionEstablishedRepository.save(connectionEstablish);
+            connectionRequestRepository.delete(connectionRequest);
             return "Connection Established";
         }
         catch (Exception e){

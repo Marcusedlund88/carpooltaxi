@@ -1,7 +1,8 @@
 package com.example.carpooltaxi.CONTROLLER;
 
 import com.example.carpooltaxi.BODY.RequestBodyConnection;
-import com.example.carpooltaxi.DATA.Connection;
+import com.example.carpooltaxi.DATA.ConnectionEstablish;
+import com.example.carpooltaxi.DATA.ConnectionRequest;
 import com.example.carpooltaxi.REPOSITORY.*;
 import com.example.carpooltaxi.SERVICE.RequestService;
 import lombok.RequiredArgsConstructor;
@@ -24,13 +25,13 @@ public class ConnectionController {
     private final RequestService requestService;
 
     @GetMapping("/established/all")
-    public ResponseEntity<List<Connection>> getAllEstablishedConnections(){
-        return new ResponseEntity<List<Connection>>(connectionEstablishedRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ConnectionEstablish>> getAllEstablishedConnections(){
+        return new ResponseEntity<List<ConnectionEstablish>>(connectionEstablishedRepository.findAll(), HttpStatus.OK);
     }
 
     @GetMapping("/requested/all")
-    public ResponseEntity<List<Connection>> getAllRequestedConnections(){
-        return new ResponseEntity<List<Connection>>(connectionRequestRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<ConnectionRequest>> getAllRequestedConnections(){
+        return new ResponseEntity<List<ConnectionRequest>>(connectionRequestRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/request/send")

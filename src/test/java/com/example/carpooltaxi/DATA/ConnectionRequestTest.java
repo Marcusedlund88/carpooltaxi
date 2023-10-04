@@ -7,10 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ConnectionTest {
+class ConnectionRequestTest {
 
-    private Connection connection;
-    private Connection nullConnection;
+    private ConnectionRequest connectionRequest;
+    private ConnectionRequest nullConnectionRequest;
     private AppUser userOne;
     private AppUser userTwo;
 
@@ -18,46 +18,46 @@ class ConnectionTest {
     public void makeDummyConnection(){
         userOne = new AppUser(1, "dummyOne");
         userTwo = new AppUser(2, "dummyTwo;");
-        connection = new Connection(1,userOne,userTwo);
-        nullConnection = new Connection();
+        connectionRequest = new ConnectionRequest(1,userOne,userTwo);
+        nullConnectionRequest = new ConnectionRequest();
     }
 
     @Test
     public void getConnectionAssertNotNull(){
-        assertNotNull(connection);
+        assertNotNull(connectionRequest);
     }
 
     @Test
     public void getConnectionIdAssertEqual(){
-        assertEquals(connection.getId(), 1);
+        assertEquals(connectionRequest.getId(), 1);
     }
 
     @Test
     public void setConnectionIdAssertNotNull(){
-        nullConnection.setId(2);
-        assertEquals(nullConnection.getId(), 2);
+        nullConnectionRequest.setId(2);
+        assertEquals(nullConnectionRequest.getId(), 2);
     }
 
     @Test
     public void getSenderUserAssertEquals(){
-        assertEquals(userOne, connection.getSenderUser());
+        assertEquals(userOne, connectionRequest.getSenderUser());
     }
 
     @Test
     public void getReceiverUserAssertEquals(){
-        assertEquals(userTwo, connection.getReceiverUser());
+        assertEquals(userTwo, connectionRequest.getReceiverUser());
     }
 
     @Test
     public void setSenderUserAssertNotNull(){
-        nullConnection.setSenderUser(userOne);
-        assertNotNull(nullConnection.getSenderUser());
+        nullConnectionRequest.setSenderUser(userOne);
+        assertNotNull(nullConnectionRequest.getSenderUser());
     }
 
     @Test
     public void setReceiverUserAssertNotNull(){
-        nullConnection.setReceiverUser(userTwo);
-        assertNotNull(nullConnection.getReceiverUser());
+        nullConnectionRequest.setReceiverUser(userTwo);
+        assertNotNull(nullConnectionRequest.getReceiverUser());
     }
 
 
