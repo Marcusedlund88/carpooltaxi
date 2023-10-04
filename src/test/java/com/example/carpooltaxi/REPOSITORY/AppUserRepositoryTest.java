@@ -1,6 +1,7 @@
 package com.example.carpooltaxi.REPOSITORY;
 
 import com.example.carpooltaxi.DATA.AppUser;
+import com.example.carpooltaxi.REPOSITORY.AppUserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -31,12 +32,19 @@ class AppUserRepositoryTest {
 
         when(appUserRepository.save(appUser)).thenReturn(appUser);
         when(appUserRepository.findAll()).thenReturn(List.of(appUser));
+        when(appUserRepository.getAppUserById(appUser.getId())).thenReturn(appUser);
     }
 
     @Test
     public void findAllUsers(){
         List<AppUser> appUsers = appUserRepository.findAll();
         assertEquals(appUsers.size(), 1);
+    }
+
+    @Test
+    public void getUserByIdAssertEquals(){
+        appUser = appUserRepository.getAppUserById(1);
+        assertEquals(appUser.getId(), 1);
     }
 
 }

@@ -2,6 +2,7 @@ package com.example.carpooltaxi.REPOSITORY;
 
 import com.example.carpooltaxi.DATA.AppUser;
 import com.example.carpooltaxi.DATA.Location;
+import com.example.carpooltaxi.REPOSITORY.CurrentLocationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

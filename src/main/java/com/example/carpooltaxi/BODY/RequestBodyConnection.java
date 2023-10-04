@@ -1,4 +1,4 @@
-package com.example.carpooltaxi.Body;
+package com.example.carpooltaxi.BODY;
 
 public class RequestBodyConnection {
 

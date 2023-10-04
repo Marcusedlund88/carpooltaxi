@@ -2,6 +2,7 @@ package com.example.carpooltaxi.REPOSITORY;
 
 import com.example.carpooltaxi.DATA.AppUser;
 import com.example.carpooltaxi.DATA.Connection;
+import com.example.carpooltaxi.REPOSITORY.ConnectionRequestRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -40,6 +41,7 @@ class ConnectionRequestRepositoryTest {
 
         when(connectionRequestRepository.save(connection)).thenReturn(connection);
         when(connectionRequestRepository.findAll()).thenReturn(List.of(connection));
+        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connection);
     }
 
     @Test
@@ -49,6 +51,12 @@ class ConnectionRequestRepositoryTest {
 
     @Test
     public void getReceiverAppUserIdAssertCorrectValue(){
+        assertEquals(connection.getReceiverUser().getId(),5);
+    }
+
+    @Test
+    public void getConnectionByReceiverId(){
+        connection = connectionRequestRepository.getConnectionByReceiverUserId(5);
         assertEquals(connection.getReceiverUser().getId(),5);
     }
 }
