@@ -35,3 +35,39 @@ jobs:
       - name: build
         run: |
           ./gradlew build
+          
+
+  bootJar:
+    runs-on: ubuntu-latest
+    environment: env
+    env:
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      SS_USER: ${{ secrets.SS_USER }}
+      SS_PASSWORD: ${{ secrets.SS_PASSWORD }}
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: "17"
+          distribution: temurin
+
+      - name: Validate Gradle Wrapper
+        uses: gradle/wrapper-validation-action@ccb4328a959376b642e027874838f60f8e596de3
+
+      - name: Make Gradlew Executable
+        run: chmod +x ./gradlew
+
+      - name: bootJar
+        run: |
+          ./gradlew bootJar
+          
+      - name: Upload Jar
+        uses: actions/upload-artifact@v3
+        with:
+          name: app
+          path: build/libs/carpooltaxi-0.0.1-SNAPSHOT.jar
