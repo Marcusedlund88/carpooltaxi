@@ -33,8 +33,30 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'io.rest-assured:rest-assured:5.3.2'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+sourceSets {
+    systemTest {
+        java.srcDir file('src/systemTest/java')
+        resources.srcDir file('src/systemTest/resources')
+        compileClasspath += sourceSets.main.output + sourceSets.test.output
+        runtimeClasspath += sourceSets.main.output + sourceSets.test.output
+    }
+}
+    configurations {
+        systemTestImplementation.extendsFrom testImplementation
+        systemTestRuntimeOnly.extendsFrom testRuntimeOnly
+    }
+    task integrationTest(type: Test) {
+        testClassesDirs = sourceSets.systemTest.output.classesDirs
+        classpath = sourceSets.systemTest.runtimeClasspath
+
+        useJUnitPlatform()
+        testLogging {
+            events "PASSED", "FAILED", "SKIPPED"
+        }
+    }
