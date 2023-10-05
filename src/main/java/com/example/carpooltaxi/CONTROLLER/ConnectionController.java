@@ -39,9 +39,7 @@ public class ConnectionController {
 
         try {
             return new ResponseEntity<String>
-                    (requestService.establishConnection(requestBodyConnection) + " " +
-                            connectionRequestRepository.findAll() + " " +
-                            connectionEstablishedRepository.findAll()
+                    (requestService.establishConnection(requestBodyConnection)
                             , HttpStatus.OK);
         }
         catch (Exception e){
@@ -53,9 +51,7 @@ public class ConnectionController {
         System.out.println(requestBodyConnection);
         try {
             return new ResponseEntity<String>
-                    (requestService.establishConnectionGranted(requestBodyConnection) + " " +
-                            connectionRequestRepository.findAll() + " " +
-                            connectionEstablishedRepository.findAll()
+                    (requestService.establishConnectionGranted(requestBodyConnection)
                             , HttpStatus.OK);
         }
         catch (Exception e){
