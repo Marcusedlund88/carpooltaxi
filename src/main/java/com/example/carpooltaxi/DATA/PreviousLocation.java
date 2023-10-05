@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Location {
+public class PreviousLocation {
 
     @Id
     @GeneratedValue
@@ -23,7 +23,7 @@ public class Location {
 
     private String latitude;
 
-    public Location(AppUser appUser, String longitude, String latitude) {
+    public PreviousLocation(AppUser appUser, String longitude, String latitude) {
         this.appUser = appUser;
         this.longitude = longitude;
         this.latitude = latitude;

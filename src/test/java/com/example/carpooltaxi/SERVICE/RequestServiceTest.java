@@ -40,23 +40,21 @@ class RequestServiceTest {
     @InjectMocks
     private ConnectionRequest connectionRequestTwo;
 
-    @InjectMocks
+    private RequestService requestService;
     private AppUser appUserOne;
-
-    @InjectMocks
     private AppUser appUserTwo;
 
     private long id;
 
     @BeforeEach
-    private void setUpMockEnvironment(){
+    private void setUpMockEnvironment() {
 
         MockitoAnnotations.openMocks(this);
 
-        appUserOne = new AppUser(1,"dummyOne");
-        appUserTwo = new AppUser(2,"dummyTwo");
+        appUserOne = new AppUser(1, "dummyOne");
+        appUserTwo = new AppUser(2, "dummyTwo");
 
-        connectionRequest = new ConnectionRequest(1,appUserOne,appUserTwo);
+        connectionRequest = new ConnectionRequest(1, appUserOne, appUserTwo);
 
         when(connectionEstablishedRepository.save(connectionEstablish)).thenReturn(connectionEstablish);
         when(connectionEstablishedRepository.findAll()).thenReturn(List.of(connectionEstablish));
@@ -65,74 +63,69 @@ class RequestServiceTest {
         when(connectionRequestRepository.save(connectionRequest)).thenReturn(connectionRequest);
         when(connectionRequestRepository.findAll()).thenReturn(List.of(connectionRequest));
         when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connectionRequest);
+        when(connectionRequestRepository.findAllByReceiverUserId(appUserTwo.getId())).thenReturn(List.of(connectionRequest));
+        when(connectionRequestRepository.getConnectionBySenderUserId(appUserOne.getId())).thenReturn(connectionRequest);
+        when(connectionRequestRepository.getConnectionByReceiverUserId(appUserTwo.getId())).thenReturn(connectionRequest);
+
+        when(appUserRepository.save(appUserOne)).thenReturn(appUserOne);
+        when(appUserRepository.getAppUserById(appUserOne.getId())).thenReturn(appUserOne);
+        when(appUserRepository.save(appUserTwo)).thenReturn(appUserTwo);
+        when(appUserRepository.getAppUserById(appUserTwo.getId())).thenReturn(appUserTwo);
+
+        appUserRepository.save(appUserOne);
+        appUserRepository.save(appUserTwo);
+
+        requestService = new RequestService(connectionRequestRepository, connectionEstablishedRepository, appUserRepository);
     }
 
     @Test
-    public void establishConnectionExpectBusy(){
+    public void establishConnectionExpectBusy() {
+        appUserRepository.save(appUserOne);
+        appUserRepository.save(appUserTwo);
         connectionEstablishedRepository.save(connectionEstablish);
         RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
         requestBodyConnection.setIdSender(appUserOne.getId());
         requestBodyConnection.setIdReceiver(appUserTwo.getId());
+        requestService.establishConnection(requestBodyConnection);
 
-        assertEquals(establishConnection(requestBodyConnection),"User are busy");
+        assertEquals(requestService.establishConnection(requestBodyConnection), "User are busy");
     }
 
     @Test
-    public void establishConnectionExpectWaitForResponse(){
-        RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
-        requestBodyConnection.setIdSender(5);
-        requestBodyConnection.setIdReceiver(6);
+    public void establishConnectionExpectWaitForResponse() {
+        AppUser appUser3 = new AppUser(4,"dummyfour");
+        AppUser appUser4 = new AppUser(3,"dummyThree");
 
-        assertEquals(establishConnection(requestBodyConnection),"Wait for user response");
+        when(appUserRepository.save(appUser3)).thenReturn(appUser3);
+        when(appUserRepository.getAppUserById(appUser3.getId())).thenReturn(appUser3);
+        when(appUserRepository.save(appUser4)).thenReturn(appUser4);
+        when(appUserRepository.getAppUserById(appUser4.getId())).thenReturn(appUser4);
+        appUserRepository.save(appUser4);
+
+        RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
+        requestBodyConnection.setIdSender(3);
+        requestBodyConnection.setIdReceiver(4);
+
+        assertEquals(requestService.establishConnection(requestBodyConnection), "Wait for user response");
     }
 
     @Test
-    public void connectionEstablishedExpectOK(){
+    public void connectionEstablishedExpectOK() {
+
         RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
-        requestBodyConnection.setIdSender(5);
-        requestBodyConnection.setIdReceiver(6);
-        establishConnection(requestBodyConnection);
-        assertEquals(establishConnectionGranted(requestBodyConnection),"Connection Established");
+        requestBodyConnection.setIdSender(2);
+        requestBodyConnection.setIdReceiver(1);
+
+        assertEquals(requestService.establishConnectionGranted(requestBodyConnection), "Connection Established");
     }
 
     @Test
-    public void connectionEstablishedExpectFoundInRepo(){
+    public void connectionEstablishedExpectFoundInRepo() {
         RequestBodyConnection requestBodyConnection = new RequestBodyConnection();
-        requestBodyConnection.setIdSender(1);
-        requestBodyConnection.setIdReceiver(2);
-        establishConnectionGranted(requestBodyConnection);
+        requestBodyConnection.setIdSender(2);
+        requestBodyConnection.setIdReceiver(1);
+        requestService.establishConnectionGranted(requestBodyConnection);
 
         assertNotNull(connectionRequestRepository.getConnectionByReceiverUserId(2));
-    }
-
-    public String establishConnection(RequestBodyConnection requestBodyConnection){
-        if(connectionEstablishedRepository.getConnectionByReceiverUserId(requestBodyConnection.getIdReceiver()) != null){
-            return "User are busy";
-        }
-        else{
-            try {
-                connectionRequestRepository.save(new ConnectionRequest(appUserRepository.getAppUserById(requestBodyConnection.getIdSender())
-                        , appUserRepository.getAppUserById(requestBodyConnection.getIdReceiver())));
-                return "Wait for user response";
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-        return "Ooops something went wrong";
-    }
-
-    public String establishConnectionGranted(RequestBodyConnection requestBodyConnection){
-
-        try{
-            connectionRequest = connectionRequestRepository.getConnectionByReceiverUserId(requestBodyConnection.getIdReceiver());
-            connectionEstablishedRepository.save(connectionEstablish);
-            connectionRequestRepository.delete(connectionRequest);
-            return "Connection Established";
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return "Something went wrong";
     }
 }
