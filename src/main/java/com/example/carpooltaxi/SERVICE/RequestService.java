@@ -1,6 +1,7 @@
 package com.example.carpooltaxi.SERVICE;
 
 import com.example.carpooltaxi.BODY.RequestBodyConnection;
+import com.example.carpooltaxi.DATA.AppUser;
 import com.example.carpooltaxi.DATA.ConnectionEstablish;
 import com.example.carpooltaxi.DATA.ConnectionRequest;
 import com.example.carpooltaxi.REPOSITORY.AppUserRepository;
@@ -21,6 +22,8 @@ public class RequestService {
 
     public String establishConnection(RequestBodyConnection requestBodyConnection){
 
+        AppUser appUserOne = appUserRepository.getAppUserById(requestBodyConnection.getIdSender());
+        AppUser appUserTwo= appUserRepository.getAppUserById(requestBodyConnection.getIdReceiver());
         if(appUserRepository.getAppUserById(requestBodyConnection.getIdSender()) != null
                 &&
         appUserRepository.getAppUserById(requestBodyConnection.getIdReceiver()) != null) {
@@ -42,12 +45,15 @@ public class RequestService {
     }
 
     public String establishConnectionGranted(RequestBodyConnection requestBodyConnection){
-        List<ConnectionRequest> connectionRequests = connectionRequestRepository.findAllByReceiverUserId(requestBodyConnection.getIdSender());
+        List<ConnectionRequest> connectionRequests = connectionRequestRepository
+                .findAllByReceiverUserId(requestBodyConnection.getIdSender());
 
-        connectionRequests.stream().filter(index -> index.getSenderUser().getId() == requestBodyConnection.getIdReceiver())
-                .findFirst()
-                .ifPresent(request -> {
-                        connectionEstablishedRepository.save(
+        if(connectionRequests
+                .stream()
+                .anyMatch(index -> index.getSenderUser().getId() == requestBodyConnection.getIdReceiver()
+                && index.getReceiverUser().getId() == requestBodyConnection.getIdSender())){
+
+            connectionEstablishedRepository.save(
                                 new ConnectionEstablish(
                                         appUserRepository.getAppUserById(requestBodyConnection.getIdSender()),
                                         appUserRepository.getAppUserById(requestBodyConnection.getIdReceiver())
@@ -55,8 +61,13 @@ public class RequestService {
                         );
                         connectionRequestRepository.deleteById(
                                 connectionRequestRepository.getConnectionBySenderUserId(requestBodyConnection.getIdReceiver()).getId());
-                });
-        return "Connection Established";
+
+                        return "Connection Established";
+        }
+                else{
+                return "Connection Refused";
+        }
+
     }
 
 }

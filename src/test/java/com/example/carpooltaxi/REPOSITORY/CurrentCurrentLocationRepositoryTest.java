@@ -1,8 +1,7 @@
 package com.example.carpooltaxi.REPOSITORY;
 
 import com.example.carpooltaxi.DATA.AppUser;
-import com.example.carpooltaxi.DATA.Location;
-import com.example.carpooltaxi.REPOSITORY.CurrentLocationRepository;
+import com.example.carpooltaxi.DATA.CurrentLocation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,13 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class CurrentLocationRepositoryTest {
+public class CurrentCurrentLocationRepositoryTest {
 
     @Mock
     private CurrentLocationRepository currentLocationRepository;
 
     @InjectMocks
-    private Location location;
+    private CurrentLocation currentLocation;
 
     @InjectMocks
     private AppUser appUser;
@@ -33,12 +32,12 @@ public class CurrentLocationRepositoryTest {
         MockitoAnnotations.openMocks(this);
 
         appUser = new AppUser(9, "dummyOne");
-        location = new Location(9, appUser, "dummyLong", "dummyLat");
+        currentLocation = new CurrentLocation(9, appUser, "dummyLong", "dummyLat");
 
-        when(currentLocationRepository.save(location)).thenReturn(location);
-        when(currentLocationRepository.findAll()).thenReturn(List.of(location));
-        when(currentLocationRepository.getLocationByAppUser_Id(appUser.getId())).thenReturn(List.of(location));
-        when(currentLocationRepository.getLocationById(location.getId())).thenReturn(location);
+        when(currentLocationRepository.save(currentLocation)).thenReturn(currentLocation);
+        when(currentLocationRepository.findAll()).thenReturn(List.of(currentLocation));
+        when(currentLocationRepository.getLocationByAppUser_Id(appUser.getId())).thenReturn(List.of(currentLocation));
+        when(currentLocationRepository.getLocationById(currentLocation.getId())).thenReturn(currentLocation);
 
     }
     @Test
@@ -54,13 +53,13 @@ public class CurrentLocationRepositoryTest {
     @Test
     void getLocationByUserIdAssertEqual(){
 
-        List<Location> locations = currentLocationRepository.getLocationByAppUser_Id(9);
-        assertEquals(locations.get(0).getId(),9);
+        List<CurrentLocation> currentLocations = currentLocationRepository.getLocationByAppUser_Id(9);
+        assertEquals(currentLocations.get(0).getId(),9);
     }
     @Test
     void getLocationByUserIdAssertSizeOne(){
-        List<Location> locations = currentLocationRepository.getLocationByAppUser_Id(9);
-        assertEquals(locations.size(), 1);
+        List<CurrentLocation> currentLocations = currentLocationRepository.getLocationByAppUser_Id(9);
+        assertEquals(currentLocations.size(), 1);
     }
 
 }

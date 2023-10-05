@@ -1,13 +1,13 @@
 package com.example.carpooltaxi.REPOSITORY;
 
-import com.example.carpooltaxi.DATA.Location;
+import com.example.carpooltaxi.DATA.CurrentLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-    public interface CurrentLocationRepository extends JpaRepository<Location, Long> {
-        Location getLocationById(long id);
-        List<Location> getLocationByAppUser_Id(long id);
+    public interface CurrentLocationRepository extends JpaRepository<CurrentLocation, Long> {
+        CurrentLocation getLocationById(long id);
+        List<CurrentLocation> getLocationByAppUser_Id(long id);
     }
