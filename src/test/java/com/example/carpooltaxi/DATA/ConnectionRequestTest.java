@@ -21,6 +21,16 @@ class ConnectionRequestTest {
         connectionRequest = new ConnectionRequest(1,userOne,userTwo);
         nullConnectionRequest = new ConnectionRequest();
     }
+    @Test
+    public void testReflexivity(){
+        assertTrue(connectionRequest.equals(connectionRequest));
+    }
+
+    @Test
+    public void testHashCode(){
+        ConnectionRequest connectionRequest1 = new ConnectionRequest(1,userOne,userTwo);
+        assertEquals(connectionRequest.hashCode(), connectionRequest1.hashCode());
+    }
 
     @Test
     public void getConnectionAssertNotNull(){

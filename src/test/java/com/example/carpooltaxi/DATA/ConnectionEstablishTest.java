@@ -1,5 +1,7 @@
 package com.example.carpooltaxi.DATA;
 
+import com.example.carpooltaxi.DATA.AppUser;
+import com.example.carpooltaxi.DATA.ConnectionEstablish;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ConnectionEstablishedTest {
+class ConnectionEstablishTest {
 
     private ConnectionEstablish connectionEstablish;
     private ConnectionEstablish nullConnectionEstablished;
@@ -20,6 +22,16 @@ class ConnectionEstablishedTest {
         userTwo = new AppUser(2, "dummyTwo;");
         connectionEstablish = new ConnectionEstablish(1,userOne,userTwo);
         nullConnectionEstablished = new ConnectionEstablish();
+    }
+    @Test
+    public void testReflexivity(){
+        assertTrue(connectionEstablish.equals(connectionEstablish));
+    }
+
+    @Test
+    public void testHashCode(){
+        ConnectionEstablish connectionEstablish1 = new ConnectionEstablish(1,userOne,userTwo);
+        assertEquals(connectionEstablish.hashCode(), connectionEstablish1.hashCode());
     }
 
     @Test
