@@ -31,7 +31,7 @@ class AppUserTest {
 
     @Test
     public void getIdExpectEqual() {
-        assertEquals(appUser.getId(), 10);
+        assertEquals(appUser.getId(), 1);
     }
 
     @Test
