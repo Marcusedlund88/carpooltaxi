@@ -1,5 +1,6 @@
-package com.example.carpooltaxi.CONTROLLER;
+package com.examplecarpooltaxi.CONTROLLER;
 
+import com.example.carpooltaxi.CarpooltaxiApplication;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-@SpringBootTest
+@SpringBootTest(classes = CarpooltaxiApplication.class)
 @AutoConfigureMockMvc
 class UserControllerTest {
 
