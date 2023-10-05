@@ -165,11 +165,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-    deploy:
-      runs-on: ubuntu-latest
-      needs: dockerize
+  deploy:
+    runs-on: ubuntu-latest
+    needs: dockerize
 
-      steps:
-        - name: Deploy Your Application
-          run: |
-            echo "This is a message from the workflow task."
+    steps:
+      - name: Deploy Your Application
+        run: |
+          echo "This is a message from the workflow task."
