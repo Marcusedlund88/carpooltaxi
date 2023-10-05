@@ -176,7 +176,4 @@ jobs:
     steps:
       - name: Deploy Your Application
         run: |
-          current_branch=$(git branch --show-current)
-          DOCKER_IMAGE="your-docker-registry.com/your-repo"
-          merged_image="$DOCKER_IMAGE:$current_branch"
-          echo "Docker image address: $merged_image"
+          echo "Deployed to https://github.com/Marcusedlund88/carpooltaxi/pkgs/container/carpooltaxi"
