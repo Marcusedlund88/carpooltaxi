@@ -99,4 +99,4 @@ jobs:
 
       - name: Run all system tests
         run: |
-          ./gradlew systemTest
+          ./gradlew test
