@@ -105,3 +105,16 @@ task unitTest(type: Test) {
     }
     finalizedBy jacocoTestReport
 }
+
+checkstyle {
+    configFile = file("${project.rootDir}/config/checkstyle/google_checks.xml")
+    showViolations = true // Denna rad visar felen i konsolen
+    toolVersion = '10.12.4'
+    reportsDir = file("${project.buildDir}/checkstyle")
+}
+tasks.withType(Checkstyle) {
+    reports {
+        xml.required = false
+        html.required = true
+    }
+}
