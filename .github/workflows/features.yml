@@ -163,6 +163,11 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Print link
+        run: |
+          DOCKER_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.dockerize.outputs.tags }}"
+          echo "Docker image address: $DOCKER_IMAGE"
+
   deploy:
     runs-on: ubuntu-latest
     needs: dockerize
@@ -171,4 +176,5 @@ jobs:
     steps:
       - name: Deploy Your Application
         run: |
-          echo "This is a message from the workflow task."
+          DOCKER_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.dockerize.outputs.tags }}"
+          echo "Docker image address: $DOCKER_IMAGE"
