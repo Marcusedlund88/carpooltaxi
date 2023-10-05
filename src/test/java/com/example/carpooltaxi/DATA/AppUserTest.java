@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class AppUserTest {
@@ -17,6 +16,17 @@ class AppUserTest {
     public void makeUser() {
         appUser = new AppUser(1, "dummyName");
         nullAppUser = new AppUser();
+    }
+
+    @Test
+    public void testReflexivity(){
+        assertTrue(appUser.equals(appUser));
+    }
+
+    @Test
+    public void testHashCode(){
+        AppUser appUser1 = new AppUser(1, "dummyName");
+        assertEquals(appUser.hashCode(), appUser1.hashCode());
     }
 
     @Test

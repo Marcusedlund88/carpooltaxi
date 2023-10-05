@@ -26,7 +26,8 @@ public class UserController {
     private final RequestService requestService;
 
     @GetMapping("")
-    public void getAllUsers(){
-        System.out.println("Hello");
+    public ResponseEntity<String> getAllUsers(){
+
+        return new ResponseEntity<String>("Hello", HttpStatus.OK);
     }
 }

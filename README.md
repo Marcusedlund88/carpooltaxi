@@ -18,3 +18,6 @@ Taxi application
 - ./gradlew integrationTest: Run integration tests
 - ./gradlew systemTest: Run system tests
 - .gradlew unitTest: Run unit test with JaCoCo
+
+## Link to image
+- docker pull ghcr.io/marcusedlund88/carpooltaxi:Deploy
