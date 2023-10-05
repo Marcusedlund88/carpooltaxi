@@ -1,7 +1,6 @@
 package com.example.carpooltaxi.BODY;
 
 public class LocationBody {
-
     private long userId;
     private String longitude;
     private String latitude;

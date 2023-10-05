@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class CurrentLocationTest {
@@ -21,6 +20,15 @@ class CurrentLocationTest {
         nullCurrentLocation = new CurrentLocation();
     }
 
+    @Test
+    public void testReflexivity(){
+        assertTrue(currentLocation.equals(currentLocation));
+    }
+    @Test
+    public void testHashCode(){
+        CurrentLocation newCurrentLocation =  new CurrentLocation(1, appUser,"dummyLong","dummyLat");
+        assertEquals(currentLocation.hashCode(), newCurrentLocation.hashCode());
+    }
     @Test
     public void getIdExpectEqual(){
         assertEquals(currentLocation.getId(),1);
