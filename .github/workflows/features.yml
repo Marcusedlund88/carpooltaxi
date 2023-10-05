@@ -165,8 +165,10 @@ jobs:
 
       - name: Print link
         run: |
-          DOCKER_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.dockerize.outputs.tags }}"
-          echo "Docker image address: $DOCKER_IMAGE"
+          current_branch=$(git branch --show-current)
+          DOCKER_IMAGE="your-docker-registry.com/your-repo"
+          merged_image="$DOCKER_IMAGE:$current_branch"
+          echo "Docker image address: $merged_image"
 
   deploy:
     runs-on: ubuntu-latest
@@ -176,5 +178,7 @@ jobs:
     steps:
       - name: Deploy Your Application
         run: |
-          DOCKER_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.dockerize.outputs.tags }}"
-          echo "Docker image address: $DOCKER_IMAGE"
+          current_branch=$(git branch --show-current)
+          DOCKER_IMAGE="your-docker-registry.com/your-repo"
+          merged_image="$DOCKER_IMAGE:$current_branch"
+          echo "Docker image address: $merged_image"
