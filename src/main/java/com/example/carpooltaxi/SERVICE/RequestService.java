@@ -44,7 +44,7 @@ public class RequestService {
         }
     }
 
-    public String establishConnectionGranted(RequestBodyConnection requestBodyConnection){
+    public int establishConnectionGranted(RequestBodyConnection requestBodyConnection){
         List<ConnectionRequest> connectionRequests = connectionRequestRepository
                 .findAllByReceiverUserId(requestBodyConnection.getIdSender());
 
@@ -62,10 +62,10 @@ public class RequestService {
                         connectionRequestRepository.deleteById(
                                 connectionRequestRepository.getConnectionBySenderUserId(requestBodyConnection.getIdReceiver()).getId());
 
-                        return "Connection Established";
+                        return 1;
         }
                 else{
-                return "Connection Refused";
+                return 26578;
         }
 
     }
