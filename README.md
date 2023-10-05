@@ -21,3 +21,4 @@ Taxi application
 
 ## Link to image
 - docker pull ghcr.io/marcusedlund88/carpooltaxi:deploy
+
