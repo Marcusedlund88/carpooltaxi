@@ -2,9 +2,10 @@ name: Fake Container Deploy
 on:
   pull_request_review:
     types: [submitted]
+
 jobs:
-  
   test-deploy:
+
     runs-on: ubuntu-latest
     if: github.event.review.state == 'approved'
     steps:
