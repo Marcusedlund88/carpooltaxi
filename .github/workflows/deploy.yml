@@ -1,0 +1,18 @@
+name: Fake Container Deploy
+on:
+  pull_request:
+    branches:
+      - main
+      -
+jobs:
+  test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Display Docker image name
+        run: "echo Docker image would be: $IMAGE"
+        env:
+          IMAGE: ${{ github.repository }}:${{ github.head_ref }}"
