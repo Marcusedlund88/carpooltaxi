@@ -1,10 +1,9 @@
 name: Fake Container Deploy
 on:
-  pull_request:
-    branches:
-      - main
-      -
+  pull_request_review:
+    types: [submitted]
 jobs:
+if: github.event.review.state == 'approved'
   test-deploy:
     runs-on: ubuntu-latest
 
