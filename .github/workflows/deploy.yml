@@ -3,10 +3,10 @@ on:
   pull_request_review:
     types: [submitted]
 jobs:
-  if: github.event.review.state == 'approved'
+  
   test-deploy:
     runs-on: ubuntu-latest
-
+    if: github.event.review.state == 'approved'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
