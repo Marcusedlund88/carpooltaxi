@@ -1,13 +1,13 @@
 name: Fake Container Deploy
 on:
-  pull_request_review:
-    types: [submitted]
+  push:
+    branches:
+      - master
 
 jobs:
   test-deploy:
 
     runs-on: ubuntu-latest
-    if: github.event.review.state == 'approved'
     steps:
       - name: Checkout
         uses: actions/checkout@v4
