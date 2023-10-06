@@ -3,7 +3,7 @@ on:
   pull_request_review:
     types: [submitted]
 jobs:
-if: github.event.review.state == 'approved'
+  if: github.event.review.state == 'approved'
   test-deploy:
     runs-on: ubuntu-latest
 
