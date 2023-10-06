@@ -20,5 +20,5 @@ Taxi application
 - .gradlew unitTest: Run unit test with JaCoCo
 
 ## Link to image
-- docker pull ghcr.io/marcusedlund88/carpooltaxi:Deploy
+docker pull ghcr.io/marcusedlund88/carpooltaxi:feature-show-merge
 
