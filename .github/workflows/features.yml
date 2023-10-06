@@ -2,7 +2,7 @@ name: CI/CD build and run tests
 on:
   push:
     branches:
-      - main
+      - master
       - feature-JaCoCo_impl
 jobs:
   build:
