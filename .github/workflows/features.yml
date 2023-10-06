@@ -188,7 +188,7 @@ jobs:
       - name: Display Docker image name
         run: "echo Docker image would be: $IMAGE"
         env:
-        IMAGE: ${{ github.repository }}:${{ github.head_ref }}"
+          IMAGE: ${{ github.repository }}:${{ github.head_ref }}"
 
       - name: Deploy Your Application
         run: |
